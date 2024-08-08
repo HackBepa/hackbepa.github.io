@@ -240,14 +240,14 @@ a {
 
   h1::before {
     content: "";
-    border-radius: 100%;
+    border-radius: 50%;
     border: 0.5rem solid;
     box-sizing: border-box;
-    height: 30rem;
+    height: 15rem;
     position: absolute;
     left: 1rem;
     top: -7rem;
-    width: 30rem;
+    width: 15rem;
   }
 
   em {
@@ -262,13 +262,13 @@ a {
 
   .planet::before {
     background: $bg-color;
-    border-radius: 50%;
+    border-radius: 100%;
     content: "";
-    height: 3rem;
+    height: 8rem;
     left: 0.4rem;
     position: absolute;
     top: -1rem;
-    width: 3rem;
+    width: 8rem;
     z-index: -1;
   }
 
