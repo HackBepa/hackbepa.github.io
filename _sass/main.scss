@@ -243,11 +243,11 @@ a {
     border-radius: 50%;
     border: 0.5rem solid;
     box-sizing: border-box;
-    height: 15rem;
+    height: 20rem;
     position: absolute;
     left: 1rem;
     top: -7rem;
-    width: 15rem;
+    width: 20rem;
   }
 
   em {
@@ -262,13 +262,13 @@ a {
 
   .planet::before {
     background: $bg-color;
-    border-radius: 100%;
+    border-radius: 50%;
     content: "";
-    height: 8rem;
+    height: 3rem;
     left: 0.4rem;
     position: absolute;
     top: -1rem;
-    width: 8rem;
+    width: 3rem;
     z-index: -1;
   }
 
