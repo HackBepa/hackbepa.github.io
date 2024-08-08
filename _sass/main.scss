@@ -221,7 +221,7 @@ a {
   align-items: center;
   color: $primary-color;
   display: flex;
-  height: 200%;
+  height: 100%;
   justify-content: center;
   left: 0;
   margin: 0.5rem;
@@ -240,7 +240,7 @@ a {
 
   h1::before {
     content: "";
-    border-radius: 50%;
+    border-radius: 100%;
     border: 0.5rem solid;
     box-sizing: border-box;
     height: 15rem;
