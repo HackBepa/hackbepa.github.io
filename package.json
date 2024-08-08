@@ -6,7 +6,7 @@
     "dev": "gulp",
     "prod": "gulp build"
   },
-  "author": "Long Do",
+  "author": "HackBepa",
   "license": "MIT",
   "dependencies": {
     "browser-sync": "^2.26.7",
