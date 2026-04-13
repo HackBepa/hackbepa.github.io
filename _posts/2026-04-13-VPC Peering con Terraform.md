@@ -45,7 +45,7 @@ Permite conectarse por SSH a instancias en subnets **privadas** sin necesidad de
 
 ## Arquitectura del lab
 
-![[Lab - VPC Peering con Terraform.png]]
+![VPC Peering con Terraform]({{ https://hackbepa.github.io }}/assets/img/peering_lab/VPC_Peering_Terraform.png)
 
 Ambas subnets son **privadas** (sin Internet Gateway). El acceso SSH se realiza a través de los EICE.
 
