@@ -1,7 +1,3 @@
-
----
-* Tags: #aws #terraform #vpc #peering #networking
----
 # Overview
 
 **Objetivo**: Conectar dos VPCs privadas en AWS mediante VPC Peering desplegado con Terraform, y verificar conectividad entre las instancias EC2 usando EC2 Instance Connect Endpoints.
@@ -147,7 +143,7 @@ resource "aws_route_table" "rt_b" {
 
 ```hcl
 resource "aws_ec2_instance_connect_endpoint" "eice_a" {
-  subnet_id          = aws_subnet.subnet_a_axel.id
+  subnet_id          = aws_subnet.subnet_a.id
   security_group_ids = [aws_security_group.sg_eice_a.id]
 }
 ```
