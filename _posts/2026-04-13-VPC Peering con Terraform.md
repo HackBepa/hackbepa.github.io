@@ -9,7 +9,8 @@
 ## Conceptos previos
 
 ### VPC Peering
-Conexión de red directa entre dos VPCs que permite que el tráfico fluya entre ellas usando IPs privadas.
+Conexión de red directa entre dos VPCs que permite que el tráfico fluya entre ellas usando IPs privadas. Nos interesa comunicar recursos mediante peering para garantizar que la conexion es privada y no pasara por internet.
+Podemos comunicar subnets tanto de otras regiones de AWS como otras cuentas. Esto como os imaginareis es muy interesante de dominar.
 
 > [!INFO]
 > El peering **no es transitivo**. Si A hace peering con B, y B hace peering con C, A **no puede** hablar con C a través de B. Habría que crear un peering directo A-C.
@@ -21,21 +22,12 @@ Conexión de red directa entre dos VPCs que permite que el tráfico fluya entre 
 
 ### Subnets: pública vs privada
 
-| Tipo        | Característica                                                                                                                         |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **Pública** | Tiene una **Internet Gateway** asociada. Las instancias pueden tener IP pública y salir/entrar directamente a internet.                |
-| **Privada** | Sin Internet Gateway. El tráfico de salida a internet pasa por un **NAT Gateway** (si existe). No recibe tráfico entrante de internet. |
-
-### Internet Gateway vs NAT Gateway
-
-| | Internet Gateway | NAT Gateway |
-|---|---|---|
-| **Dirección** | Bidireccional (entrada y salida) | Solo salida (outbound) |
-| **Uso** | Subnets públicas | Subnets privadas que necesitan salir a internet |
-| **IP pública** | La instancia necesita IP pública | La instancia usa IP privada, el NAT tiene la pública |
+**Pública**: Tiene una **Internet Gateway** asociada. Las instancias pueden tener IP pública y salir/entrar directamente a internet.
+**Privada**: Sin Internet Gateway. El tráfico de salida a internet pasa por un **NAT Gateway** (si existe). No recibe tráfico entrante de internet.
 
 ### EC2 Instance Connect Endpoint (EICE)
 Permite conectarse por SSH a instancias en subnets **privadas** sin necesidad de un bastion host ni IP pública. AWS crea un endpoint en la subnet que actúa como túnel SSH.
+Cabe recalcar que esta conexion tambien la podemos realizar con SSM (Session Manager) y seria mas recomendable que el EICE principalmente por la capa de seguridad extra que nos ofrece.
 
 ---
 
@@ -43,7 +35,7 @@ Permite conectarse por SSH a instancias en subnets **privadas** sin necesidad de
 
 ![VPC Peering con Terraform]({{ https://hackbepa.github.io }}/assets/img/peering_lab/VPC_Peering_Terraform.png)
 
-Ambas subnets son **privadas** (sin Internet Gateway). El acceso SSH se realiza a través de los EICE.
+Ambas subnets son **privadas** (sin Internet Gateway). El acceso SSH se realiza a través de los endpoints de EICE.
 
 ---
 
@@ -90,7 +82,7 @@ Los EICE tienen su propio SG que solo permite **SSH saliente** dentro de su VPC.
 
 ### 4. EC2 Instances
 
-Dos instancias `t3.micro` con Amazon Linux 2023, una en cada subnet:
+Dos instancias `t3.micro` (free tier)  con Amazon Linux 2023, una en cada subnet:
 
 ```hcl
 resource "aws_instance" "ec2_a" {
@@ -150,7 +142,7 @@ resource "aws_ec2_instance_connect_endpoint" "eice_a" {
 
 ---
 
-## Despliegue
+## Deployment
 
 ```bash
 cd lab-peering
@@ -181,6 +173,10 @@ Si hay respuesta, el peering y las route tables están bien configurados.
 
 ---
 
+![Test Lab - VPC Peering con Terraform]({{ https://hackbepa.github.io }}/assets/img/peering_lab/VPC_Peering_Terraform_1.png)
+
+Como podemos ver, las instancias tienen conexion entre ellas pero no acesso a internet. Como estan en diferentes subredes esto es posible gracias a que hemos configura un peering.
+
 ## Destruir el lab
 
 ```bash
@@ -192,6 +188,8 @@ terraform destroy
 ## Conclusiones
 
 Este lab me ha gustado mucho ya que he entendido lo que es un peering en AWS y he ampliado horizontes con Terraform.
+Espero que a todos vosotros tambien os haya resultado util, si quereis poneros en contacto en este mismo blog teneis mi informacion. 
+Muchas gracias y mucho animo a todos!!
 
 **¿Qué hemos practicado?**
 - Crear VPCs con subnets privadas
